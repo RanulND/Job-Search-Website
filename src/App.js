@@ -7,6 +7,7 @@ import Register from './containers/RegisterContainer/RegisterContainer';
 import Home from './containers/HomeContainer/HomeContainer';
 import { Amplify } from 'aws-amplify'
 import { amplifyconfig } from './config';
+import SignUpConfirm from './containers/ConfirmSignUpConatainer/ConfirmSignUpContainer';
 Amplify.configure(amplifyconfig)
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/register/company' exact element={<Register company = {true} />} />
           <Route path='/company-dashboard' exact element={<Home company={true}/>} />
           <Route path='/seeker-dashboard' exact element={<Home company={false}/>} />
+          <Route path='/register/verify' exact element={<SignUpConfirm />} />
         </Routes>
       </Router>
     </div>

@@ -20,7 +20,7 @@ const JobCard = () => {
                     <button className="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Apply</button>
                 </div>
             </div>
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -29,7 +29,7 @@ const JobCard = () => {
                         </div>
                         <div className="modal-body">
                             <div className="mb-3 text-start">
-                                <label for="formFile" className="form-label mb-4">Upload your CV here</label>
+                                <label className="form-label mb-4">Upload your CV here</label>
                                 <input className="form-control" type="file" id="formFile" />
                             </div>
 

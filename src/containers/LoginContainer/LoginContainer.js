@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LoginContainer.css"
 import img from "../../assets/images/undraw_Mobile_login_re_9ntv.png"
 import { Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 const Login = () => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    async function signIn() {
+        try {
+            const user = await Auth.signIn(username, password);
+            //add user context
+            // window.location.href = "/seeker-dashboard"
+            // console.log(user)
+        } catch (error) {
+            console.log('error signing in', error);
+        }
+    }
 
     return(
         <div className="login container">
@@ -16,14 +30,14 @@ const Login = () => {
                         <div className="col-md-6 py-4">
                             <div className="mb-5 text-start">
                                 <label className="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" placeholder="name@example.com" />
+                                <input type="email" className="form-control" id="email" placeholder="name@example.com" onChange={ e => setUsername(e.target.value)} />
                             </div>
                             <div className="mb-5 text-start">
                                 <label className="form-label text-start">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="* * * * * * *" />
+                                <input type="password" className="form-control" id="password" placeholder="* * * * * * *" onChange={ e => setPassword(e.target.value)} />
                             </div>
                             <div className="mb-3 text-center">
-                                <button className="btn btn-primary px-5">
+                                <button className="btn btn-primary px-5" onClick={ _ => signIn()}>
                                     Login
                                 </button>
                             </div>

@@ -20,17 +20,17 @@ const Home = ({company}) => {
                             </div>      
                         </div>
                         
-                        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Upload your CV</h1>
+                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Add Job</h1>
                                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div className="modal-body">
-                                    <div class="mb-3 text-start">
-                                        <label for="exampleFormControlInput1" class="form-label text-start">Job title</label>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Job title" />
+                                    <div className="mb-3 text-start">
+                                        <label className="form-label text-start">Job title</label>
+                                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Job title" />
                                     </div>
 
                                     </div>
