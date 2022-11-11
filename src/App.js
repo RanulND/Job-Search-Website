@@ -16,8 +16,10 @@ const App = () => {
         <Routes>
           <Route path='/' exact element={<Login />} />
           <Route path='/register' exact element={<RegisterHome />} />
-          <Route path='/register/company' exact element={<Register />} />
-          <Route path='/home' exact element={<Home />} />
+          <Route path='/register/job-seeker' exact element={<Register company = {false} />} />
+          <Route path='/register/company' exact element={<Register company = {true} />} />
+          <Route path='/company-dashboard' exact element={<Home company={true}/>} />
+          <Route path='/seeker-dashboard' exact element={<Home company={false}/>} />
         </Routes>
       </Router>
     </div>

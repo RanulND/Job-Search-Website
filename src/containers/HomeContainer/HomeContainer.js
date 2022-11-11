@@ -1,16 +1,55 @@
 import React from "react";
 import JobCard from "../../components/JobCardComponent/JobCardComponent";
+import JobList from "../../components/JobListComponent/JobListComponent";
 import Navbar from "../../components/NavbarComponent/NavbarComponent";
 
-const Home = () => {
+const Home = ({company}) => {
 
     return(
         <div>
             <Navbar />
-            <div className="container home py-4 px-5">
-                <JobCard />
-                <JobCard />
-            </div>
+            {
+                company? (
+                    <div className="container home py-4 px-5">
+                        <div className="row">
+                            <div className="mb-3 text-end">
+                                <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Job</button>
+                            </div>
+                            <div>
+                                <JobList />
+                            </div>      
+                        </div>
+                        
+                        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h1 className="modal-title fs-5" id="exampleModalLabel">Upload your CV</h1>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div className="modal-body">
+                                    <div class="mb-3 text-start">
+                                        <label for="exampleFormControlInput1" class="form-label text-start">Job title</label>
+                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Job title" />
+                                    </div>
+
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" className="btn btn-primary">Add Job</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ):(
+                    <div className="container home py-4 px-5">
+                        <JobCard />
+                        <JobCard />
+                    </div>
+                )
+            }
+           
         </div>
         
     )

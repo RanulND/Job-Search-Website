@@ -25,9 +25,11 @@ const RegisterHome = () => {
                             You can join in to our platform and find your dream job through JobSearch platform
                         </p>
                         <div className="mb-3 text-center">
-                            <button className="btn btn-primary px-5">
-                                Register as a job seeker
-                            </button>
+                            <Link to='/register/job-seeker'>
+                                <button className="btn btn-primary px-5">
+                                    Register as a job seeker
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
