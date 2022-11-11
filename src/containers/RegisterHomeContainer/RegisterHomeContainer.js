@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 const RegisterHome = () => {
 
+
+
     return(
         <div className="container register-home">
             <div className="row align-items-center justify-content-center vh-100">
