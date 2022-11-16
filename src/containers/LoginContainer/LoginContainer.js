@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LoginContainer.css"
 import img from "../../assets/images/undraw_Mobile_login_re_9ntv.png"
 import { Link } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { SignIn } from "../../services/AuthService";
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -10,10 +10,10 @@ const Login = () => {
 
     async function signIn() {
         try {
-            const user = await Auth.signIn(username, password);
+            const user = await SignIn(username, password)
             //add user context
-            // window.location.href = "/seeker-dashboard"
-            // console.log(user)
+            window.location.href = "/seeker-dashboard"
+            console.log(user)
         } catch (error) {
             console.log('error signing in', error);
         }

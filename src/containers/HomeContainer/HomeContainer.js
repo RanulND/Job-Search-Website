@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import JobCard from "../../components/JobCardComponent/JobCardComponent";
 import JobList from "../../components/JobListComponent/JobListComponent";
 import Navbar from "../../components/NavbarComponent/NavbarComponent";
+import { v4 as uuidv4 } from 'uuid';
+import { addjob } from "../../services/CompanyService";
 
 const Home = ({company}) => {
+    const [job, setJob] = useState('')
+
+    const add = () => {
+        const data = {
+            title: job,
+            companyId: '',
+            companyName: '99x',
+            id: uuidv4()
+        }
+
+        addjob(data).then(res => {
+
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 
     return(
         <div>
@@ -30,13 +48,13 @@ const Home = ({company}) => {
                                     <div className="modal-body">
                                     <div className="mb-3 text-start">
                                         <label className="form-label text-start">Job title</label>
-                                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Job title" />
+                                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Job title" onChange={e => setJob(e.target.value)} />
                                     </div>
 
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-primary">Add Job</button>
+                                        <button type="button" className="btn btn-primary" onClick={e =>  add()}>Add Job</button>
                                     </div>
                                 </div>
                             </div>

@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../assets/images/undraw_Mobile_login_re_9ntv.png"
+import { getAllJobs } from "../../services/SeekerService";
 import './JobCardComponent.css'
 
 const JobCard = () => {
+    let [jobs, setJobs] = useState([])
+
+    useEffect(() => {
+        getAllJobs().then((res) => {
+            setJobs(res.data.Items)
+            console.log("itesms", res.data.Items)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }, [])
 
     return(
         <div className="job-card card rounded mb-4">
+            {/* {console.log(jobs)} */}
             <div className="row align-items-center justify-content-center">
                 <div className="col-md-3">
                     <img src={img} width="100%" alt="login"  />

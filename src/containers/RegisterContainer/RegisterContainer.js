@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Auth } from "aws-amplify";
-import { Navigate } from "react-router-dom";
+import { SignUp } from "../../services/AuthService";
 
 const Register = ({company}) => {
     const [username, setUsername] = useState('')
@@ -9,25 +8,38 @@ const Register = ({company}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [companyName, setCompanyName] =useState('')
+
+    const passwordValidation = () => {
+        if(password === confirmPassword){
+            return true
+        }
+        return false
+    }
 
     async function signUp() {
-        try {
-            console.log("hello")
-            const { user } = await Auth.signUp({
-                username,
-                password,
-                attributes: {
-                    email : username
-                },
-                autoSignIn: { // optional - enables auto sign in after user is confirmed
-                    enabled: true,
-                }
-            });
-            console.log(user);
-            window.location.href = "/register/verify";
-        } catch (error) {
-            console.log('error signing up:', error);
+        if(passwordValidation()){
+            try {
+                // console.log("hello")
+                const { user } = await SignUp({
+                    username,
+                    password,
+                    attributes: {
+                        email : username
+                    },
+                    autoSignIn: { // optional - enables auto sign in after user is confirmed
+                        enabled: true,
+                    }
+                });
+                console.log(user);
+                window.location.href = "/register/verify";
+            } catch (error) {
+                console.log('error signing up:', error);
+            }
+        }else{
+            alert("Passwords do not match")
         }
+        
     }
 
     // useEffect(_ => {
@@ -48,19 +60,19 @@ const Register = ({company}) => {
                         <h3 className="section-title mb-5">Register your Company</h3>
                         <div className="mb-3 text-start">
                             <label className="form-label text-start">Company Name</label>
-                            <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="first name" />
+                            <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="company name" onChange={e => setCompanyName(e.target.value)} />
                         </div>
                         <div className="mb-3 text-start">
                             <label className="form-label">Company Email address</label>
-                            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" onChange={e => setUsername(e.target.value)} />
                         </div>
                         <div className="mb-3 text-start">
                             <label className="form-label text-start">Password</label>
-                            <input type="password" className="form-control" id="password" placeholder="* * * * * * *" />
+                            <input type="password" className="form-control" id="password" placeholder="* * * * * * *" onChange={e => setPassword(e.target.value)} />
                         </div>
                         <div className="mb-3 text-start">
                             <label className="form-label text-start">Confirm Password</label>
-                            <input type="password" className="form-control" id="password" placeholder="* * * * * * *" />
+                            <input type="password" className="form-control" id="password" placeholder="* * * * * * *" onChange={e => setConfirmPassword(e.target.value)} />
                         </div>
                         <div className="mb-3 text-center">
                             <Link to='/company-dashboard'>
@@ -91,7 +103,7 @@ const Register = ({company}) => {
                         </div>
                         <div className="mb-3 text-start">
                             <label className="form-label text-start">Confirm Password</label>
-                            <input type="password" className="form-control" id="password" placeholder="* * * * * * *" onChange={ e => setConfirmPassword(e.target.value)} />
+                            <input type="password" className="form-control" id="Confirmpassword" placeholder="* * * * * * *" onChange={ e => setConfirmPassword(e.target.value)} />
                         </div>
                         <div className="mb-3 text-center">
                             {/* <Link to='/seeker-dashboard'> */}

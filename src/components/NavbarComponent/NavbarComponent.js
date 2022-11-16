@@ -1,11 +1,11 @@
 import React from "react";
-import { Auth } from "aws-amplify";
+import { SignOut } from "../../services/AuthService";
 
 const Navbar = () => {
 
     async function signOut() {
         try {
-            await Auth.signOut();
+            await SignOut()
             window.location.href = "/"
         } catch (error) {
             console.log('error signing out: ', error);
@@ -13,7 +13,6 @@ const Navbar = () => {
     }
 
     return(
-        // <div className="navbar">
             <nav className="navbar navbar-expand-lg bg-light">
                 <div className="container">
                     <a className="navbar-brand" href="/">Navbar</a>
@@ -32,7 +31,6 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
-        // </div>
     )
 }
 

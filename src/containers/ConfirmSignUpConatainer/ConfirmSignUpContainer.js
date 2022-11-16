@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Auth, Hub } from "aws-amplify";
+import { ConfirmSignUp } from "../../services/AuthService";
 
 const SignUpConfirm = () => {
     const [code, setCode] = useState('');
@@ -8,24 +8,25 @@ const SignUpConfirm = () => {
     async function confirmSignUp() {
         try {
             console.log("hello verify")
-          await Auth.confirmSignUp(username, code);
-          window.location.href = "/seeker-dashboard";
+            await ConfirmSignUp(username, code)
+            window.location.href = "/seeker-dashboard";
         } catch (error) {
             console.log('error confirming sign up', error);
         }
     }
 
-    function listenToAutoSignInEvent() {
-        Hub.listen('auth', ({ payload }) => {
-            const { event } = payload;
-            if (event === 'autoSignIn') {
-                const user = payload.data;
-                // assign user
-            } else if (event === 'autoSignIn_failure') {
-                // redirect to sign in page
-            }
-        })
-    }
+    //listener for auth
+    // function listenToAutoSignInEvent() {
+    //     Hub.listen('auth', ({ payload }) => {
+    //         const { event } = payload;
+    //         if (event === 'autoSignIn') {
+    //             const user = payload.data;
+    //             // assign user
+    //         } else if (event === 'autoSignIn_failure') {
+    //             // redirect to sign in page
+    //         }
+    //     })
+    // }
 
     return(
         <div className="container">

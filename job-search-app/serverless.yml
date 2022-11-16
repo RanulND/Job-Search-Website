@@ -7,10 +7,36 @@ provider:
   name: aws
   region: ap-south-1
   runtime: nodejs14.x
+  environment:
+    COMPANY_TABLE: 
+      Ref: CompanyTable
+    SEEKER_TABLE:
+      Ref: JobSeekerTable
+    JOB_TABLE:
+      Ref: JobTable
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - "Fn::GetAtt": [CompanyTable, Arn]
+            - "Fn::GetAtt": [JobSeekerTable, Arn]
+            - "Fn::GetAtt": [JobTable, Arn]
+            
+plugins:
+  - serverless-offline
 
 functions:
   hello:
-    handler: handler.hello
+    handler: /src/handlers/handler.hello
     events:
       - httpApi:
           path: /hello
@@ -21,31 +47,36 @@ functions:
       - httpApi:
           path: /
           method: get
-
+  getJobs:
+    handler: /src/handlers/getAllJobs.getAllJobs
+    events:
+      - httpApi:
+          path: /getAllJobs
+          method: get
+          cors: true
+  addJobs:
+    handler: /src/handlers/addJobs.addJobs
+    events:
+      - httpApi:
+          path: /addJob
+          method: post
+          cors: true
+  deleteJobs:
+    handler: /src/handlers/deleteJob.deleteJob
+    events:
+      - httpApi:
+          path: /deleteJob
+          method: delete
+          cors: true
 
 resources:
   Resources:
-    # CustomerTable:
-    #   Type: AWS::DynamoDB::Table
-    #   Properties:
-    #     AttributeDefinitions:
-    #       - AttributeName: primary_key
-    #         AttributeType: S
-    #     BillingMode: PAY_PER_REQUEST
-    #     KeySchema:
-    #       - AttributeName: primary_key
-    #         KeyType: HASH
-    #     TableName: ${self:service}-customerTable-${sls:stage}
     JobSeekerTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
-          - AttributeName: firstName
-            AttributeType: S
-          # - AttributeName: lastName
-          #   AttributeType: S
           - AttributeName: email
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
@@ -57,21 +88,15 @@ resources:
             KeySchema:
               - AttributeName: email
                 KeyType: HASH
-              - AttributeName: firstName
-                KeyType: RANGE
-              # - AttributeName: lastName
-              #   KeyType: RANGE
             Projection:
               ProjectionType: ALL    
-        TableName: ${self:service}-jobSeekerTable-1-${sls:stage}
+        TableName: ${self:service}-jobSeekerTable-${sls:stage}
     CompanyTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
-          - AttributeName: name
-            AttributeType: S
           - AttributeName: email
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
@@ -79,23 +104,18 @@ resources:
           - AttributeName: id
             KeyType: HASH
         GlobalSecondaryIndexes:
-          - IndexName: SeekerDetails
+          - IndexName: CompanyDetails
             KeySchema:
               - AttributeName: email
                 KeyType: HASH
-              - AttributeName: name
-                KeyType: RANGE
             Projection:
               ProjectionType: ALL
-          
-        TableName: ${self:service}-companyTable-${sls:stage}
+        TableName: ${self:service}-companyTable-1-${sls:stage}
     JobTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: S
-          - AttributeName: seekerId
             AttributeType: S
           - AttributeName: companyId
             AttributeType: S
@@ -103,10 +123,8 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-          - AttributeName: seekerId
-            KeyType: RANGE
         GlobalSecondaryIndexes:
-          - IndexName: JobDetails
+          - IndexName: JobD
             KeySchema:
               - AttributeName: companyId
                 KeyType: HASH
