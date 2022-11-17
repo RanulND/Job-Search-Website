@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import "./LoginContainer.css"
 import img from "../../assets/images/undraw_Mobile_login_re_9ntv.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignIn } from "../../services/AuthService";
+import { useAuth } from "../../contexts/AuthContext";
+import { setUserToken } from "../../services/TokenService";
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+    const { handleUser , setCurrentUser} = useAuth()
 
     async function signIn() {
         try {
             const user = await SignIn(username, password)
-            //add user context
-            window.location.href = "/seeker-dashboard"
-            console.log(user)
+            handleUser(user.attributes)
+            navigate('/seeker-dashboard')
         } catch (error) {
             console.log('error signing in', error);
         }
+        
     }
 
     return(
@@ -43,7 +48,7 @@ const Login = () => {
                             </div>
                             <div className="mb-3 text-center">
                                 <Link className="link" to='/register'>
-                                    <a href="/register">Dont you have an account?</a>
+                                    <div>Dont you have an account?</div>
                                 </Link>
                             </div>
                         </div>

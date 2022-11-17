@@ -11,13 +11,13 @@ const Home = ({company}) => {
     const add = () => {
         const data = {
             title: job,
-            companyId: '',
+            companyId: uuidv4(),
             companyName: '99x',
             id: uuidv4()
         }
 
         addjob(data).then(res => {
-
+            console.log(res.data.message)
         }).catch(err => {
             console.log(err)
         })

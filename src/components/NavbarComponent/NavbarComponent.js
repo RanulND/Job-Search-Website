@@ -1,12 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { SignOut } from "../../services/AuthService";
 
 const Navbar = () => {
+    const navigate = useNavigate()
+    const { logout } = useAuth()
 
     async function signOut() {
         try {
             await SignOut()
-            window.location.href = "/"
+            navigate('/')
+            logout()
         } catch (error) {
             console.log('error signing out: ', error);
         }

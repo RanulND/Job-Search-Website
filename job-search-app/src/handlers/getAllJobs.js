@@ -6,7 +6,7 @@ const JobTable = process.env.JOB_TABLE
 "use strict";
 
 module.exports.getAllJobs = async (event) => {
-  const animals = await db
+  const jobs = await db
     .scan({
       TableName: JobTable,
     })
@@ -19,6 +19,6 @@ module.exports.getAllJobs = async (event) => {
 			'Access-Control-Allow-Headers': 'Content-Type',
 			'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT',
 		},
-    body: JSON.stringify(animals) 
+    body: JSON.stringify(jobs) 
   }
 }

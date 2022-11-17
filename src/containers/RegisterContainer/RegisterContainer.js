@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { SignUp } from "../../services/AuthService";
 
 const Register = ({company}) => {
@@ -9,6 +10,9 @@ const Register = ({company}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [companyName, setCompanyName] =useState('')
+    const navigate = useNavigate()
+
+    const { handleUser } = useAuth()
 
     const passwordValidation = () => {
         if(password === confirmPassword){
@@ -27,12 +31,16 @@ const Register = ({company}) => {
                     attributes: {
                         email : username
                     },
-                    autoSignIn: { // optional - enables auto sign in after user is confirmed
+                    autoSignIn: {
                         enabled: true,
                     }
                 });
                 console.log(user);
-                window.location.href = "/register/verify";
+                const data = {
+                    username: user.username
+                }
+                handleUser(data)
+                navigate('/register/verify')
             } catch (error) {
                 console.log('error signing up:', error);
             }

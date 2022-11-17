@@ -7,6 +7,8 @@ provider:
   name: aws
   region: ap-south-1
   runtime: nodejs14.x
+  httpApi:
+    cors: true
   environment:
     COMPANY_TABLE: 
       Ref: CompanyTable
@@ -53,21 +55,18 @@ functions:
       - httpApi:
           path: /getAllJobs
           method: get
-          cors: true
   addJobs:
     handler: /src/handlers/addJobs.addJobs
     events:
       - httpApi:
           path: /addJob
           method: post
-          cors: true
   deleteJobs:
     handler: /src/handlers/deleteJob.deleteJob
     events:
       - httpApi:
           path: /deleteJob
           method: delete
-          cors: true
 
 resources:
   Resources:

@@ -1,15 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/NavbarComponent/NavbarComponent";
+import { useAuth } from "../../contexts/AuthContext";
 import { ConfirmSignUp } from "../../services/AuthService";
 
 const SignUpConfirm = () => {
     const [code, setCode] = useState('');
-    const [username, setUsername] = useState('ranulnavoijith@gmail.com')
+    // const [username, setUsername] = useState('ranulnavoijith+04@gmail.com')
+    const { currentUser } = useAuth()
+    const navigate = useNavigate()
 
     async function confirmSignUp() {
         try {
-            console.log("hello verify")
-            await ConfirmSignUp(username, code)
-            window.location.href = "/seeker-dashboard";
+            // console.log("hello verify")
+            // console.log(currentUser.username)
+            const res = await ConfirmSignUp(currentUser.username, code)
+            // console.log(res)
+            navigate('/seeker-dashboard')
         } catch (error) {
             console.log('error confirming sign up', error);
         }
@@ -29,12 +36,16 @@ const SignUpConfirm = () => {
     // }
 
     return(
-        <div className="container">
-            <div className="row vh-100 p-5 align-items center justify-content-center ">
-                <label className="form-label text-start">Confirmation Code</label>
-                <input type="text" className="form-control" placeholder="Confirmation Code" onChange={ e => setCode(e.target.value)} />
-                 <div className="mb-3 text-start">
-                    <button className="btn btn-primary" onClick={ _ => confirmSignUp()}>Verify</button>
+        <div>
+
+            <Navbar />
+            <div className="container">
+                <div className="row h-100 p-5 align-items center justify-content-center ">
+                    <label className="form-label text-start">Confirmation Code</label>
+                    <input type="text" className="form-control" placeholder="Confirmation Code" onChange={ e => setCode(e.target.value)} />
+                    <div className="mb-3 text-start">
+                        <button className="btn btn-primary" onClick={ _ => confirmSignUp()}>Verify</button>
+                    </div>
                 </div>
             </div>
         </div>
