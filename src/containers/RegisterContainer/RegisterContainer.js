@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { SignUp } from "../../services/AuthService";
+import { v4 as uuidv4 } from 'uuid';
+import { addSeekerDetails } from "../../services/SeekerService";
+import { addCompanyDetails } from "../../services/CompanyService";
 
 const Register = ({company}) => {
     const [username, setUsername] = useState('')
@@ -12,7 +15,7 @@ const Register = ({company}) => {
     const [companyName, setCompanyName] =useState('')
     const navigate = useNavigate()
 
-    const { handleUser } = useAuth()
+    const { handleUser, setCompany } = useAuth()
 
     const passwordValidation = () => {
         if(password === confirmPassword){
@@ -36,10 +39,40 @@ const Register = ({company}) => {
                     }
                 });
                 console.log(user);
-                const data = {
-                    username: user.username
+                
+                if(company){
+                    const data = {
+                        username: user.username,
+                        companyName: companyName,
+                        id: username,
+                        confirmed: false,
+                        isSeeker: !company
+                    }
+                    addCompanyDetails(data).then(res => {
+                        console.log(res.data)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                    handleUser(data, company)
+                }else{
+                    const data = {
+                        username: user.username,
+                        firstName: firstName,
+                        lastName: lastName,
+                        id: uuidv4(),
+                        confirmed: false,
+                        isSeeker: !company
+                    }
+
+                    addSeekerDetails(data).then(res => {
+                        console.log(res.data)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                    handleUser(data, company)
                 }
-                handleUser(data)
+                
+                
                 navigate('/register/verify')
             } catch (error) {
                 console.log('error signing up:', error);
@@ -83,11 +116,11 @@ const Register = ({company}) => {
                             <input type="password" className="form-control" id="password" placeholder="* * * * * * *" onChange={e => setConfirmPassword(e.target.value)} />
                         </div>
                         <div className="mb-3 text-center">
-                            <Link to='/company-dashboard'>
-                                <button className="btn btn-primary px-5">
+                            {/* <Link to='/company-dashboard'> */}
+                                <button className="btn btn-primary px-5" onClick={_ => signUp()}>
                                     Register as a company
                                 </button>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                     </div>
                 ):(

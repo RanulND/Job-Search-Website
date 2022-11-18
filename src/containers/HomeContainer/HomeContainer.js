@@ -4,20 +4,23 @@ import JobList from "../../components/JobListComponent/JobListComponent";
 import Navbar from "../../components/NavbarComponent/NavbarComponent";
 import { v4 as uuidv4 } from 'uuid';
 import { addjob } from "../../services/CompanyService";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Home = ({company}) => {
     const [job, setJob] = useState('')
+    const {currentUser} = useAuth()
 
     const add = () => {
         const data = {
             title: job,
-            companyId: uuidv4(),
+            companyId: currentUser.id ,
             companyName: '99x',
             id: uuidv4()
         }
 
         addjob(data).then(res => {
             console.log(res.data.message)
+            alert("Job Added Successfully")
         }).catch(err => {
             console.log(err)
         })
@@ -62,7 +65,6 @@ const Home = ({company}) => {
                     </div>
                 ):(
                     <div className="container home py-4 px-5">
-                        <JobCard />
                         <JobCard />
                     </div>
                 )

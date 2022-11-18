@@ -6,7 +6,7 @@ const JobTable = process.env.JOB_TABLE
 "use strict";
 
 module.exports.deleteJob = async (event) => {
-    const id = JSON.parse(event.body).id
+    const id = event.pathParameters.id
     await db
       .delete({
         TableName: JobTable,
@@ -21,7 +21,7 @@ module.exports.deleteJob = async (event) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT',
-      },
+        'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+      }
     }
   }

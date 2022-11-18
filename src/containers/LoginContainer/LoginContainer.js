@@ -6,7 +6,7 @@ import { SignIn } from "../../services/AuthService";
 import { useAuth } from "../../contexts/AuthContext";
 import { setUserToken } from "../../services/TokenService";
 
-const Login = () => {
+const Login = ({company}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
@@ -17,7 +17,12 @@ const Login = () => {
         try {
             const user = await SignIn(username, password)
             handleUser(user.attributes)
-            navigate('/seeker-dashboard')
+            if(company){
+                navigate('/company-dashboard')
+            }else{
+                navigate('/seeker-dashboard')
+            }
+            
         } catch (error) {
             console.log('error signing in', error);
         }

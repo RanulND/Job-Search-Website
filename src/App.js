@@ -15,7 +15,8 @@ const App = () => {
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' exact element={<Login />} />
+          <Route path='/' exact element={<Login company={false} />} />
+          <Route path='/login/company' exact element={<Login company={true} />} />
           <Route path='/register' exact element={<RegisterHome />} />
           <Route path='/register/job-seeker' exact element={<Register company = {false} />} />
           <Route path='/register/company' exact element={<Register company = {true} />} />

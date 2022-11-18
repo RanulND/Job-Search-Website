@@ -7,16 +7,26 @@ import { ConfirmSignUp } from "../../services/AuthService";
 const SignUpConfirm = () => {
     const [code, setCode] = useState('');
     // const [username, setUsername] = useState('ranulnavoijith+04@gmail.com')
-    const { currentUser } = useAuth()
+    const { currentUser, handleUser } = useAuth()
     const navigate = useNavigate()
+    const { company } = useAuth()
 
     async function confirmSignUp() {
         try {
-            // console.log("hello verify")
-            // console.log(currentUser.username)
             const res = await ConfirmSignUp(currentUser.username, code)
-            // console.log(res)
-            navigate('/seeker-dashboard')
+
+            const userData = {
+                ...currentUser,
+                confirmed: true
+            }
+            
+            handleUser(userData,company)
+            if(currentUser.isSeeker){
+                navigate('/seeker-dashboard')
+            }else{
+                navigate('/company-dashboard')
+            }
+            
         } catch (error) {
             console.log('error confirming sign up', error);
         }

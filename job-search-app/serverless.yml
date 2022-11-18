@@ -65,8 +65,39 @@ functions:
     handler: /src/handlers/deleteJob.deleteJob
     events:
       - httpApi:
-          path: /deleteJob
+          path: /deleteJob/{id}
           method: delete
+  addSeeker:
+    handler: /src/handlers/addSeeker.addSeeker
+    events:
+      - httpApi:
+          path: /addSeeker
+          method: post
+  addCompany:
+    handler: /src/handlers/addCompany.addCompany
+    events: 
+      - httpApi:
+          path: /addCompany
+          method: post
+  getSeeker:
+    handler: /src/handlers/getSeeker.getSeeker
+    events:
+      - httpApi:
+          path: /getSeeker/{id}
+          method: get
+  getCompany:
+    handler: /src/handlers/getCompany.getCompany
+    events:
+      - httpApi:
+          path: /getCompany/{id}
+          method: get
+  getJobsByCompanyId:
+    handler: /src/handlers/getJobsByCompanyId.getJobsByCompanyId
+    events:
+      - httpApi:
+          path: /getjobs/{id}
+          method: get
+
 
 resources:
   Resources:

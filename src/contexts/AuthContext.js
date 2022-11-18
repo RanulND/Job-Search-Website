@@ -18,9 +18,9 @@ const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState()
     const [company, setCompany] = useState(null)
 
-    const handleUser = (user) => {
+    const handleUser = (user, company) => {
         setCurrentUser(user)
-        setCompany()
+        setCompany(company)
     }
 
     const logout = () => {
@@ -35,7 +35,8 @@ const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{
             currentUser,
             handleUser,
-            logout
+            logout,
+            company
         }}>
             {children}
         </AuthContext.Provider>
